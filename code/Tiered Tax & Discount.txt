@@ -1,0 +1,38 @@
+FUNCTION calculateFinalPrice(basePrice, discountRules, taxTiers):
+
+    discountedPrice = basePrice
+    totalDiscount = 0
+    
+    FOR EACH discountPercent IN discountRules:
+        discountAmount = discountedPrice * (discountPercent / 100)
+        totalDiscount = totalDiscount + discountAmount
+        discountedPrice = discountedPrice - discountAmount
+    
+
+    taxRate = 0
+    
+    IF discountedPrice >= taxTiers.A.threshold:
+        taxRate = taxTiers.A.rate  // 10%
+    ELSE IF discountedPrice >= taxTiers.B.threshold:
+        taxRate = taxTiers.B.rate  // 5%
+    ELSE:
+        taxRate = taxTiers.C.rate  // 0%
+    
+
+    taxAmount = discountedPrice * (taxRate / 100)
+    finalPrice = discountedPrice + taxAmount
+    
+    RETURN finalPrice
+END FUNCTION
+
+
+taxTiers = {
+    A: { threshold: 1000000, rate: 10 },
+    B: { threshold: 500000, rate: 5 },
+    C: { threshold: 0, rate: 0 }
+}
+
+discountRules = [10, 20]  // First 10%, then 20% of remaining
+basePrice = 1200000
+
+finalPrice = calculateFinalPrice(basePrice, discountRules, taxTiers)

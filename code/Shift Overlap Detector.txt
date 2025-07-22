@@ -1,0 +1,36 @@
+FUNCTION detectShiftOverlaps(shifts):
+    FOR EACH shift IN shifts:
+        shift.start_minutes = convertToMinutes(shift.start_time)
+        shift.end_minutes = convertToMinutes(shift.end_time)
+    
+    overlaps = []
+    
+
+    FOR i FROM 0 TO length(shifts)-1:
+        FOR j FROM i+1 TO length(shifts)-1:
+            shift1 = shifts[i]
+            shift2 = shifts[j]
+            
+
+            IF (shift2.start_minutes < shift1.end_minutes AND 
+                shift2.end_minutes > shift1.start_minutes):
+                
+
+                overlaps.append((shift1.name, shift2.name))
+    
+    RETURN overlaps
+END FUNCTION
+
+
+FUNCTION convertToMinutes(timeString):
+    hours, minutes = split(timeString, ":")
+    RETURN hours * 60 + minutes
+END FUNCTION
+
+shifts = [
+    { name: "A", start_time: "08:00", end_time: "12:00" },
+    { name: "B", start_time: "11:00", end_time: "14:00" },
+    { name: "C", start_time: "13:00", end_time: "18:00" }
+]
+
+overlappingPairs = detectShiftOverlaps(shifts)

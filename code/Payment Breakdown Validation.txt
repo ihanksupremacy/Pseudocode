@@ -1,0 +1,28 @@
+FUNCTION validatePayment(invoiceTotal, payments):
+
+    totalPaid = 0
+    
+
+    FOR EACH payment IN payments:
+        totalPaid = totalPaid + payment.amount
+    
+
+    IF totalPaid == invoiceTotal:
+        RETURN { status: "ok", difference: 0 }
+    ELSE IF totalPaid > invoiceTotal:
+        difference = totalPaid - invoiceTotal
+        RETURN { status: "overpaid", difference: difference }
+    ELSE:
+        difference = invoiceTotal - totalPaid
+        RETURN { status: "underpaid", difference: difference }
+END FUNCTION
+
+
+invoiceTotal = 100000
+payments = [
+    { method: "cash", amount: 20000 },
+    { method: "card", amount: 50000 },
+    { method: "ewallet", amount: 30000 }
+]
+
+result = validatePayment(invoiceTotal, payments)

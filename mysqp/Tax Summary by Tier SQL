@@ -1,0 +1,13 @@
+SELECT 
+    tax_tier,
+    SUM(amount * tax_percent / 100) AS total_tax,
+    COUNT(*) AS transaction_count,
+    SUM(amount) AS total_amount_before_tax
+FROM 
+    transactions
+WHERE 
+    date BETWEEN '2025-01-01' AND '2025-12-31'  
+GROUP BY 
+    tax_tier
+ORDER BY 
+    tax_tier;

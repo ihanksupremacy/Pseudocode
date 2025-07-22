@@ -1,0 +1,18 @@
+SELECT 
+    s1.employee_id AS employee1,
+    s2.employee_id AS employee2,
+    s1.start_time AS start1,
+    s1.end_time AS end1,
+    s2.start_time AS start2,
+    s2.end_time AS end2
+FROM 
+    shifts s1
+JOIN 
+    shifts s2 ON 
+    s1.id < s2.id 
+    AND (
+      
+        (s2.start_time < s1.end_time AND s2.end_time > s1.start_time)
+    )
+ORDER BY 
+    s1.employee_id, s2.employee_id;

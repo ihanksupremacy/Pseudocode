@@ -1,0 +1,30 @@
+FUNCTION groupSalesByDateAndPayment(salesRecords):
+
+    groupedSales = {}
+    
+    FOR EACH record IN salesRecords:
+        date = record.date
+        paymentType = record.payment_type
+        amount = record.amount
+
+        IF NOT groupedSales.hasKey(date):
+            groupedSales[date] = {}
+        
+
+        IF NOT groupedSales[date].hasKey(paymentType):
+            groupedSales[date][paymentType] = 0
+        
+
+        groupedSales[date][paymentType] += amount
+    
+    RETURN groupedSales
+END FUNCTION
+
+
+salesRecords = [
+    { date: "2025-07-10", payment_type: "card", amount: 20000 },
+    { date: "2025-07-10", payment_type: "cash", amount: 10000 },
+    { date: "2025-07-11", payment_type: "card", amount: 30000 }
+]
+
+result = groupSalesByDateAndPayment(salesRecords)
